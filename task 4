@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <string> 
-#include <cstdlib> 
+#include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -18,7 +18,8 @@ int main() {
         cout << "1. Add Task" << endl;
         cout << "2. View Tasks" << endl;
         cout << "3. Mark Task as Completed" << endl;
-        cout << "4. Exit" << endl;
+        cout << "4. Remove Task" << endl;
+        cout << "5. Exit" << endl;
 
         int choice = 0;
         cin >> choice;
@@ -26,14 +27,14 @@ int main() {
         if (choice == 1) {
             cout << "Enter task description: ";
             string description;
-            cin.ignore(); 
+            cin.ignore();
             getline(cin, description);
-            Task newTask = {description, false};
+            Task newTask = { description, false };
             tasks.push_back(newTask);
             cout << "Task added: " << description << endl;
         } else if (choice == 2) {
             if (tasks.empty()) {
-                cout << "No tasks in the list." << endl;
+                cout << "No tasks in the list...." << endl;
             } else {
                 cout << "Tasks in the list:" << endl;
                 for (size_t i = 0; i < tasks.size(); ++i) {
@@ -41,7 +42,7 @@ int main() {
                     if (tasks[i].completed) {
                         cout << "[X] ";
                     } else {
-                        cout << "[ ] ";
+                        cout << "[-->] ";
                     }
                     cout << tasks[i].description << endl;
                 }
@@ -57,11 +58,25 @@ int main() {
                     tasks[taskNumber - 1].completed = true;
                     cout << "Task marked as completed: " << tasks[taskNumber - 1].description << endl;
                 } else {
-                    cout << "Invalid task number." << endl;
+                    cout << "task number not found...." << endl;
                 }
             }
         } else if (choice == 4) {
-            cout << "Exiting." << endl;
+            if (tasks.empty()) {
+                cout << "No tasks in the list." << endl;
+            } else {
+                cout << "Enter the task number you want to remove: ";
+                int taskNumber = 0;
+                cin >> taskNumber;
+                if (taskNumber >= 1 && taskNumber <= static_cast<int>(tasks.size())) {
+                    cout << "Task removed: " << tasks[taskNumber - 1].description << endl;
+                    tasks.erase(tasks.begin() + taskNumber - 1);
+                } else {
+                    cout << "task number not found..." << endl;
+                }
+            }
+        } else if (choice == 5) { 
+            cout << "Exiting......" << endl;
             break;
         } else {
             cout << "Invalid choice. Please select a valid option." << endl;
